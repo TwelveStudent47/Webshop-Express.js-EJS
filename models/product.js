@@ -18,8 +18,11 @@ const getProductsFromFile = cb => {
 
 // Amikor beimportáljuk a modult, akkor ez az osztály lesz érvényben
 module.exports = class Product {
-    constructor(title) {
+    constructor(title, imageUrl, desc, price) {
         this.title = title
+        this.imageUrl = imageUrl
+        this.desc = desc
+        this.price = price
     }
 
     // Mentés funkció
