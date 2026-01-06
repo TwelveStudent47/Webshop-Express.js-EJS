@@ -15,7 +15,8 @@ exports.getProducts = (req, res) => {
             {
                 prods: products,
                 path: "/admin/products",
-                pageTitle: "Admin Products"
+                pageTitle: "Admin Products",
+                hasProducts: products.length > 0
             }
         )
     })
