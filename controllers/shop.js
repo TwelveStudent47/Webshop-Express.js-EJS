@@ -52,3 +52,16 @@ exports.getOrders = (req, res) => {
         }
     )
 }
+
+exports.getCurrentProduct = (req, res) => {
+    const { productId } = req.params
+    Product.fetchById(productId, product => {
+        res.render("shop/product-detail",
+            {
+                product: product,
+                pageTitle: product.title,
+                path: "/products"
+            }
+        )
+    })
+}

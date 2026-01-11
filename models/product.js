@@ -27,6 +27,7 @@ module.exports = class Product {
 
     // Mentés funkció
     save() {
+        this.id = Math.random().toString();
         // A funkció meghvásakor a "products"-ra hivatkozunk, mint lista, 
         // ekkor hozzáadjuk ezt az objuktumot ami a Object típussal rendelkezik,
         // ezután beleírjuk a fájlba a JSON formátumba alakított listát,
@@ -43,5 +44,12 @@ module.exports = class Product {
     // Statikus függvény ami alapján visszakapjuk a címeket
     static fetchAll(cb) {
         getProductsFromFile(cb)
+    }
+
+    static fetchById(id, cb) {
+        getProductsFromFile(products => {
+            const product = products.find(p => p.id === id)
+            cb(product)
+        })
     }
 }
