@@ -18,7 +18,8 @@ const getProductsFromFile = cb => {
 
 // Amikor beimportáljuk a modult, akkor ez az osztály lesz érvényben
 module.exports = class Product {
-    constructor(title, imageUrl, desc, price) {
+    constructor(id, title, imageUrl, desc, price) {
+        this.id = id
         this.title = title
         this.imageUrl = imageUrl
         this.desc = desc
@@ -27,17 +28,25 @@ module.exports = class Product {
 
     // Mentés funkció
     save() {
-        this.id = Math.random().toString();
         // A funkció meghvásakor a "products"-ra hivatkozunk, mint lista, 
         // ekkor hozzáadjuk ezt az objuktumot ami a Object típussal rendelkezik,
         // ezután beleírjuk a fájlba a JSON formátumba alakított listát,
         // hiba esetén kiírjuk a hibát.
         getProductsFromFile(products => {
-            console.log(this)
-            products.push(this)
-            fs.writeFile(routeToData, JSON.stringify(products), err => {
-                console.log(err)
-            })
+            if (this.id) {
+                const existingProductIndex = products.findIndex(prod => prod.id === this.id)
+                const updatedProducts = [...products]
+                updatedProducts[existingProductIndex] = this
+                fs.writeFile(routeToData, JSON.stringify(updatedProducts), err => {
+                    console.log(err)
+                })
+            } else {
+                this.id = Math.random().toString();
+                products.push(this)
+                fs.writeFile(routeToData, JSON.stringify(products), err => {
+                    console.log(err)
+                })
+            }
         })
     }
 
