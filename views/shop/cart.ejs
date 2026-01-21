@@ -2,6 +2,14 @@
     <link rel="stylesheet" href="/css/product.css">
 <%- include('../includes/navbar.ejs') %>
     <main>
-        
+        <% if (products.length > 0) { %>
+            <ul>
+                <% products.forEach(product => { %>
+                   <li><%= product.productData.title %> (<%= product.qty %>)</li> 
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <h1>No Products in Cart!</h1>
+        <% } %>
     </main>
 <%- include('../includes/footer.ejs') %>
