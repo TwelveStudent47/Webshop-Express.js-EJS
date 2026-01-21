@@ -1,6 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 const pathMod = require("../util/path")
+const Cart = require("./cart")
 
 // Létrehozza azt az elérési utat, ahol a könyv címek vannak: "D:\My Codes\Node\ejs-01\data\products.json"
 const routeToData = path.join(pathMod, "data", "products.json")
@@ -38,13 +39,17 @@ module.exports = class Product {
                 const updatedProducts = [...products]
                 updatedProducts[existingProductIndex] = this
                 fs.writeFile(routeToData, JSON.stringify(updatedProducts), err => {
-                    console.log(err)
+                    if (err) {
+                        console.log(err)
+                    }
                 })
             } else {
                 this.id = Math.random().toString();
                 products.push(this)
                 fs.writeFile(routeToData, JSON.stringify(products), err => {
-                    console.log(err)
+                    if (err) {
+                        console.log(err)
+                    }
                 })
             }
         })
@@ -64,12 +69,14 @@ module.exports = class Product {
 
     static deleteById(id) {
         getProductsFromFile(products => {
+            const product = products.find(p => p.id === id);
             const updatedProducts = products.filter(p => p.id !== id);
             fs.writeFile(routeToData, JSON.stringify(updatedProducts), err => {
                 if (err) {
-                    console.log(err)
+                    console.log(err);
                 }
-            })
-        })
+                Cart.deleteProduct(id, product.price)
+            });
+        });
     }
 }
