@@ -4,8 +4,8 @@
   "description": "Complete Node.js Guide",
   "main": "app.js",
   "scripts": {
-    "start" : "node app.js",
-    "dev" : "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^4.16.3",
     "express-handlebars": "^8.0.3",
+    "pg": "^8.17.2",
     "pug": "^3.0.3"
   }
 }
