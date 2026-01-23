@@ -13,8 +13,12 @@ module.exports = class Product {
 
     // Mentés funkció
     save() {
-        const data = Pool.query("INSERT INTO products (title, price, description, imageurl) VALUES ($1, $2, $3, $4)",
-            [this.title, this.price, this.desc, this.imageUrl])
+        try {
+            Pool.query("UPDATE products SET title = $1, price = $2, description = $3, imageurl = $4 WHERE id = $5", [this.title, this.price, this.desc, this.imageUrl, this.id]);
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 
     // Statikus függvény ami alapján visszakapjuk a címeket
@@ -27,9 +31,15 @@ module.exports = class Product {
         }
     }
 
-    static fetchById(id) {
-        
+    static async fetchById(id) {
+    try {
+        const data = await Pool.query("SELECT * FROM products WHERE id = $1", [id]);
+        return data.rows[0];
+    } catch (err) {
+        console.log(err);
+        throw err;
     }
+}
 
     static deleteById(id) {
         

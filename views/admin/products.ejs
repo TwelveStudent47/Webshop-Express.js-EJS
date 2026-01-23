@@ -12,11 +12,11 @@
                             <h1 class="product__title"><%= prod.title %></h1>
                         </header>
                         <div class="card__image">
-                            <img src="<%= prod.imageUrl %>" alt="<%= prod.desc %>">
+                            <img src="<%= prod.imageurl %>" alt="<%= prod.desc %>">
                         </div>
                         <div class="card__content">
                             <h2 class="product__price">$<%= prod.price %></h2>
-                            <p class="product__description"><%= prod.desc %></p>
+                            <p class="product__description"><%= prod.description %></p>
                         </div>
                         <div class="card__actions">
                             <a href="/admin/edit-product/<%= prod.id %>?edit=true" class="btn">Edit</a>
