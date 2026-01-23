@@ -1,29 +1,28 @@
 const Product = require("../models/product")
 const Cart = require("../models/cart")
-exports.getProducts = (req, res) => {
-    Product.fetchAll(products => {
-        res.render("shop/product-list", 
+
+exports.getProducts = async (req, res) => {
+    const products = await Product.fetchAll();
+    const productsData = products.rows;
+    res.render("shop/product-list", 
             {
-                prods: products,
+                prods: productsData,
                 path: "/products",
                 pageTitle: "Products",
-                hasProducts: products.length > 0
+                hasProducts: productsData.length > 0
             }
-        )
-    })
+        );
 }
 
-exports.getIndex = (req, res) => {
-    Product.fetchAll(products => {
-        res.render("shop/index", 
-            {
-                prods: products,
-                path: "/",
-                pageTitle: "Shop",
-                hasProducts: products.length > 0
-            }
-        )
-    })
+exports.getIndex = async (req, res) => {
+    const products = await Product.fetchAll();
+    const productsData = products.rows;
+    res.render("shop/index", {
+        prods: productsData,
+        path: "/",
+        pageTitle: "Shop",
+        hasProducts: productsData.length > 0
+    });
 }
 
 exports.getCart = (req, res) => {

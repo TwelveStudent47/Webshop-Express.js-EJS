@@ -8,13 +8,13 @@ exports.getAddProduct = (req, res) => {
             path: "/admin/add-product",
             editing: editMode 
         }
-    )
+    );
 }
 
-exports.postAddProduct = (req, res) => {
+exports.postAddProduct = async (req, res) => {
     const { title, imageUrl, price, desc } = req.body
     const product = new Product(null, title, imageUrl, desc, price)
-    product.save()
+    await product.save()
     res.redirect("/")
 }
 
