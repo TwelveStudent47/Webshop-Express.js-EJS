@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const pool = require("../util/database");
+const db = require("../util/database");
 
-const Product = pool.define("product", {
+const Product = db.define("product", {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -13,7 +13,7 @@ const Product = pool.define("product", {
         allowNull: false
     },
     price: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     imageUrl: {
