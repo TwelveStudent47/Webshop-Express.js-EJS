@@ -1,14 +1,7 @@
-const pg = require("pg")
-require("dotenv").config()
+const Sequelize = require('sequelize');
 
-const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL
-})
+const sequelize = new Sequelize('webshop', 'postgres', 'Laczkofamily60!2007', {
+    dialect: "postgres"
+});
 
-if (!pool) {
-    console.log("Connection to database failed!")
-} else {
-    console.log("Connection to database was successful!")
-}
-
-module.exports = pool;
+module.exports = sequelize;
