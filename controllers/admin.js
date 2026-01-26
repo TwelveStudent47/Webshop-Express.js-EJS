@@ -18,7 +18,7 @@ exports.postAddProduct = async (req, res) => {
             imageUrl: imageUrl,
             description: desc
         });
-        console.log("Successfully created the Product!")
+        console.log("Successfully created the Product!");
     } catch (err) {
         console.log(err);
     }
@@ -48,7 +48,7 @@ exports.getEditProduct = async (req, res) => {
     const { id } = req.params;
     const productById = await Product.findByPk(id);
     if (!productById) {
-        res.redirect("/")
+        res.redirect("/");
     }
 
     res.render("admin/edit-product", {
@@ -68,14 +68,14 @@ exports.postEditProduct = async (req, res) => {
         productById.price = price;
         productById.description = desc;
         productById.save();
-        res.redirect("/admin/products")
+        res.redirect("/admin/products");
     } catch (err) {
         console.log(err);
     }
 }
 
 exports.postDeleteProduct = async (req, res) => {
-    const { productId } = req.body
+    const { productId } = req.body;
     try {
         await Product.destroy({
             where: {
