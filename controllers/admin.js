@@ -25,13 +25,12 @@ exports.postAddProduct = async (req, res) => {
 }
 
 exports.getProducts = async (req, res) => {
-    const products = await Product.fetchAll();
-    const productsData = products.rows;
+    const products = await Product.findAll();
     res.render("admin/products", {
-        prods: productsData,
+        prods: products,
         path: "/admin/products",
         pageTitle: "Admin Products",
-        hasProducts: productsData.length > 0
+        hasProducts: products.length > 0
     });
 }
 
