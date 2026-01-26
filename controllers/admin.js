@@ -46,7 +46,7 @@ exports.getEditProduct = async (req, res) => {
     }
 
     const { id } = req.params;
-    const productById = await Product.fetchById(id);
+    const productById = await Product.findByPk(id);
     if (!productById) {
         res.redirect("/")
     }
@@ -60,10 +60,18 @@ exports.getEditProduct = async (req, res) => {
 }
 
 exports.postEditProduct = async (req, res) => {
-    const { productId, title, imageUrl, price, desc } = req.body
-    const updatedProduct = new Product(productId, title, imageUrl, desc, price)
-    await updatedProduct.save()
-    res.redirect("/admin/products")
+    const { productId, title, imageUrl, price, desc } = req.body;
+    try {
+        const productById = await Product.findByPk(productId);
+        productById.title = title;
+        productById.imageUrl = imageUrl;
+        productById.price = price;
+        productById.description = desc;
+        productById.save();
+        res.redirect("/admin/products")
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 exports.postDeleteProduct = (req, res) => {
