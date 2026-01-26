@@ -10,10 +10,18 @@ exports.getAddProduct = (req, res) => {
 }
 
 exports.postAddProduct = async (req, res) => {
-    const { title, imageUrl, price, desc } = req.body
-    const product = new Product(null, title, imageUrl, desc, price)
-    await product.save()
-    res.redirect("/")
+    const { title, imageUrl, price, desc } = req.body;
+    try {
+        await Product.create({
+            title: title,
+            price: price,
+            imageUrl: imageUrl,
+            description: desc
+        });
+        console.log("Successfully created the Product!")
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 exports.getProducts = async (req, res) => {
