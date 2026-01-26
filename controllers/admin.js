@@ -1,7 +1,7 @@
-const Product = require("../models/product")
+const Product = require("../models/product");
 
 exports.getAddProduct = (req, res) => {
-    const editMode = req.params.edit
+    const editMode = req.params.edit;
     res.render("admin/edit-product", {
         pageTitle: "Add Product",
         path: "/admin/add-product",
@@ -25,13 +25,17 @@ exports.postAddProduct = async (req, res) => {
 }
 
 exports.getProducts = async (req, res) => {
-    const products = await Product.findAll();
-    res.render("admin/products", {
-        prods: products,
-        path: "/admin/products",
-        pageTitle: "Admin Products",
-        hasProducts: products.length > 0
-    });
+    try {
+        const products = await Product.findAll();
+        res.render("admin/products", {
+            prods: products,
+            path: "/admin/products",
+            pageTitle: "Admin Products",
+            hasProducts: products.length > 0
+        });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 exports.getEditProduct = async (req, res) => {

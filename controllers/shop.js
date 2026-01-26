@@ -1,26 +1,46 @@
-const Product = require("../models/product")
-const Cart = require("../models/cart")
+const Product = require("../models/product");
+const Cart = require("../models/cart");
 
 exports.getIndex = async (req, res) => {
-    const products = await Product.findAll();
-    res.render("shop/index", {
-        prods: products,
-        path: "/",
-        pageTitle: "Shop",
-        hasProducts: products.length > 0
-    });
+    try {
+        const products = await Product.findAll();
+        res.render("shop/index", {
+            prods: products,
+            path: "/",
+            pageTitle: "Shop",
+            hasProducts: products.length > 0
+        });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 exports.getProducts = async (req, res) => {
-    const products = await Product.findAll();
-    res.render("shop/product-list", 
-            {
-                prods: products,
-                path: "/products",
-                pageTitle: "Products",
-                hasProducts: products.length > 0
-            }
-        );
+    try {
+        const products = await Product.findAll();
+        res.render("shop/product-list", {
+            prods: products,
+            path: "/products",
+            pageTitle: "Products",
+            hasProducts: products.length > 0
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.getProduct = async (req, res) => {
+    const { productId } = req.params;
+    try {
+        const product = await Product.findByPk(productId);
+        res.render("shop/product-detail.ejs", {
+            product: product,
+            path: "/product",
+            pageTitle: "Test"
+        }); 
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 exports.getCart = (req, res) => {
@@ -76,17 +96,4 @@ exports.getOrders = (req, res) => {
             pageTitle: "Your Orders"
         }
     )
-}
-
-exports.getCurrentProduct = (req, res) => {
-    const { productId } = req.params
-    Product.fetchById(productId, product => {
-        res.render("shop/product-detail",
-            {
-                product: product,
-                pageTitle: product.title,
-                path: "/products"
-            }
-        )
-    })
 }
