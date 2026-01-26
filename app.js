@@ -3,8 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const errorController = require("./controllers/error")
-const db = require("./util/database")
+const errorController = require("./controllers/error");
+const db = require("./util/database");
+const Product = require("./models/product");
+const User = require("./models/user");
 
 const app = express();
 
@@ -21,7 +23,16 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-db.sync().then(result => {
+Product.belongsTo(User, {
+    constraints: true,
+    onDelete: "CASCADE"
+});
+
+User.hasMany(Product);
+
+db.sync({
+    force: true
+}).then(result => {
     app.listen(3000);
 }).catch(err => {
     console.log(err);
